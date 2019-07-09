@@ -1,6 +1,6 @@
-def f(n):
-    return n * 10 + 5
-print(f(f(f(10))))
+a = [1, 2, 3]
+print(*a)
+
 
 
 
