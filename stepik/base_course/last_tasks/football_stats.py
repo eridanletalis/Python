@@ -32,9 +32,11 @@ def fill(index, a, b):
 a = int(input())
 d = dict()
 for i in range(a):
+
     game = [i for i in input().strip().split(';')]
     teams = [game[0], game[2]]
     score = [int(game[1]), int(game[3])]
+
     for j in range(2):
         if j % 2 == 0:
             if d.get(teams[j]) is None:
@@ -46,6 +48,7 @@ for i in range(a):
                 d[teams[j]] = [0] * 5
             for k in range(5):
                 d[teams[j]][k] += fill(k, score[1], score[0])
+
 for key, value in d.items():
     result = key + ":"
     for i in value:

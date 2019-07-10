@@ -1,6 +1,6 @@
-a = [1, 2, 3]
-print(*a)
-
+s = 'asdasd'
+q = s.replace('a', 'A')
+print(q)
 
 
 
