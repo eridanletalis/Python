@@ -1,0 +1,37 @@
+ Ошибки:
+
+- Syntax error (синтаксические) - единственные ошибки, на которые файл проверяется до исполнения кода
+- Type error (типизация) - ошибка при сравнении несравнимых типов (1 > 'asd')
+- Name error (именная) - ошибка при использовании еще не определенной переменной
+- Index error - ошибка при указании несуществующего индекса элемента
+- ZeroDevisionError - ошибка приделении на 0
+- полный список "https://docs.python.org/3/library/exceptions.html#exception-hierarchy"
+
+ Состав ошибки:
+
+- тип ошибки (отдельный класс)
+- сообщение
+- состояние стека вызова на момент ошибки (File "...", line 17, in f() - место, где произошла ошибка)
+
+ Отлавливание ошибок: для того, чтобы исполнение программы не прервалось
+
+try:
+    a = [1, 2, 'a', 3]
+    a.sort
+except (TypeError, IndexError) as e:
+    type(e)
+    print(e.args)
+except NameError:
+    print(':(')
+except:
+    print('All types of error')
+else:
+    print('0 errors')
+finally:
+    print('will be done anyway')
+
+ Выброс ошибок:
+
+def right_name(name):
+    if len(name) < 1:
+        raise ValueError("no name value")  - тип ошибки и сообщение
