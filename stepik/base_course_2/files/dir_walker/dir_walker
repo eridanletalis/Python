@@ -1,0 +1,11 @@
+# Выводим все папки, где есть хотя бы 1 файл с расширением .py
+
+import os
+
+result1 = {dir_name for dir_name, dirs, files in os.walk('example_dir_tree') for file in files if file.endswith('.py')}
+result2 = sorted([dir for dir in result1])
+
+print(result2)
+with open('out.txt', 'w') as out:
+    out.write('\n'.join(result2))
+

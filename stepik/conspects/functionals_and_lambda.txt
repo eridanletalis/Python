@@ -1,0 +1,30 @@
+ Функции(как функциональные интерфейсы):
+
+- map_obj = map(int, list)  - итератор по list с применением к каждому элементу int(element)
+- n, k = map(int, list)  - распаковка итератора(или итерируемого объекта) по кол-ву переменных (бросает ошибку, если кол-во не совпадает)
+
+- def even(x):
+    return x % 2 == 0
+  evens = filter(even, list)  - итератор по list, который возвращает только те элементы, которые even(list[i]) == True
+
+ Лямбда функции:
+
+- lambda args: return_value  - args - аргументы, return_value - возвращаемое значение в одно выражение
+- ПРИМЕР:
+    list.sort(key=lambda item: len(''.join(name)) - сортирует двумерный список по длине содержимого каждого list[i]
+
+ Модуль operator:
+
+- import operator as op  - импортирование модуля
+- op.add(4, 5) - сложение
+- op.mul(4, 5) - умножение
+- op.contains(list, 4) - содержит ли list - 4
+- f = op.itemgetter(1) - реализация функции, которая == f(x) -> x[1] (возвращает [1] элемент)
+- f = op.attrgetter('a') - реализация функции, которая == f(x) -> x.a (возвращает атрибут 'a')
+
+ Модуль functools:
+
+- from functools import partial - модуль для установки аргументов в функцию (
+- ПРИМЕР:
+    int2 = partial(int, base=2) - создаем функцию int2, которая сразу принимает значения int в двоичной системе
+    sort_by_last = partial(list.sort, key=op.itemgetter(-1))

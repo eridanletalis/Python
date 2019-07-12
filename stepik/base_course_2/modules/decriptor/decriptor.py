@@ -1,13 +1,13 @@
-# import simplecrypt
-# import Cryptodome.Cipher.
-#
-# passwords = []
-# with open('encrypted.bin', 'r') as file_reader:
-#     encrypted = file_reader.read()
-# with open('passwords.txt', 'r') as file_reader1:
-#     for line in file_reader1:
-#         passwords.append(line)
-#
-# for i in passwords:
-#     print(simplecrypt.decrypt(i, encrypted))
-#     print('next text')
+import requests
+from simplecrypt import decrypt, DecryptionException
+
+code = requests.get('https://stepic.org/media/attachments/lesson/24466/encrypted.bin').content
+passes = requests.get('https://stepic.org/media/attachments/lesson/24466/passwords.txt').content
+
+for p in passes.split():
+    try:
+        s = decrypt(p, code)
+    except DecryptionException:
+        pass
+    else:
+        print(p, s)

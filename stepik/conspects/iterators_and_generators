@@ -1,0 +1,51 @@
+ Итератор:
+
+- iter = iter(object) - получение итератора object-а
+- next(iter) - получение след. итерации object-а
+- StopIteration - исключение, когда элементов в object уже нет
+- ПРИМЕР: (реализация цикла for для list)
+    list = [a, b, c]
+    iterator = iter(list)
+    while True:
+        try:
+            i = next(iterator)
+            print(i)
+        except StopIteration:
+            break
+
+ Создание объекта с итератором:
+
+class MyIterator:
+
+    def __init__(self, k):
+        self.k = k  - кол-во допустимых итераций
+        self.i = 0  - кол-во проделанных итераций
+
+    def __iter__(self):  - метод, который позволяет вызвать iter(MyIterator) а далее использовать next(iterator)
+        return self  - здесь возвращает самого себя, т.к является итератором, в др. случаях должен возвращать итератор
+
+    def __next__(self):  - при определении этого метода объект становится итератором и возможно вызвать next(obj) в main
+        if self.i <= self.k:
+            self.i += 1
+            return 'next value'  - пока кол-во итераций <= k будет возвращать
+        else:
+            raise StopIteration  - бросится если i > k
+
+- ПРИМЕР использования нашего итератора с FOR:
+for i in MyIterator(10):
+    print(i)
+
+
+ Генераторы:
+
+- def my_gen():  - ключевое слово yield сразу определяет нашу функцию к generators
+    # this code will be executed when we call next(..) first time
+    yield 1  - добавляет итерацию. вызвать ее можно функцией next(..) или перебрать через for
+    yield 2
+    yield 3
+    return "No more elements" - текст выведется как сообщение к StopIteration
+ gen = my_gen()
+ for i in range(4):
+    x = next(gen)  - по окончанию yield-ов выбросит StopIteration (в данном случае на 4 итерации)
+
+- iterator = ((x, y) for i in range(10) for j in range(10) if x > y) - генератор, выводящий пару чисел при x > y и x,y < 10
