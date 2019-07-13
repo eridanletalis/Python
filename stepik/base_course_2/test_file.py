@@ -1,3 +1,7 @@
-a = ['ba', 'c', 'a']
-a[0].split()
-print(a)
+import sys
+import re
+
+pattern = r'(cat)'
+for line in sys.stdin:
+    line = line.rstrip()
+    print(re.findall(pattern, line))

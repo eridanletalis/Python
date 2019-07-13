@@ -2,3 +2,5 @@
 
 -  https://www.python.org/dev/peps/pep-0008/? - официальный источник
 -  ?http://pythonworld.ru/osnovy/pep-8-rukovodstvo-po-napisaniyu-koda-na-python.html - русскоязычный материал
+-  obj.__doc__ - вывод документации obj-a
+-  для добавления документации в свой класс используем комментарий после строки с 'def'
