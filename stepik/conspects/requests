@@ -1,0 +1,16 @@
+ Модуль requests:
+
+- res = requests.get(url) - GET запрос по адресу
+- res.status_code - статус загрузки (200 - удачно, 404 - не найдено, 500 - ошибка сервера)
+- res.headers - словарь header-а
+- res.content - содержимое ресурса в бинарном виде (для передачи фото, видео и т.п)
+- res.text - содержимое ресурса в текстовом виде
+- res.url - возвращает правильно составленную ссылку, куда мы обращаемся через код
+ ПРИМЕР:
+
+res = requests.get("https://yandex.ru/search/", params={
+                                                    "text": "Stepik"
+                                                    "test": "test1"
+                                                    "list": ["test1", 'test2']
+                                                    })
+- res.url - "https://yandex.ru/search/?text=Stepik&test=test1&list=test1&list=test2"

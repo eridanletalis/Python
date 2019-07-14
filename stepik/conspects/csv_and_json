@@ -1,0 +1,45 @@
+ CSV:
+
+- текстовый формат хранения данных (табличный метод)
+- import csv - модуль для работы с csv-файлами
+- csv.reader(file_reader) - список строк(тоже списков) file_reader - файл, открытый на чтение
+- for row in csv.reader(file, delimiter="\t"): ... - перебор строк файла (строки уже в виде списка) (при delim='\t', формат = .tsv)
+- writer = csv.writer(file) - объявление writer-а
+- for i in list: writer.writerow(i, quote=csv.QUOTE_NONNUMERIC) - записывает строку в файл, при этом учитывая знаки ',' и т.п. (quote - параметр помещения в кавычки)
+
+- ПРИМЕР:
+file_name, file_editor, file_weight
+a, pycharm, 100
+b, idea, "200,6"  - "" - изоляция значения, т.е csv.reader считает не "200", '6', а "200,6"
+
+ JSON:
+
+- формат, описывающий объекты через "ключ-значение" (как словари), но ключ - только "str" (двойные кавычки), True/False == true/false, None == null
+- import json - модуль для работы с json-файлами
+- data = [dict1, dict2]
+  data_json = json.dumps(data, indent=4, sort_keys=True) - текстовый формат json с отступами 4 пробела и отсортированными ключами
+  data_python = json.loads(data_json) - переводит формат json в словарь python
+  data_json_from_file = json.load(file) - считывание из файла
+
+
+
+- ПРИМЕР:
+
+{
+  "orderID": 12345,
+  "shopperName": "John Smith",
+  "shopperEmail": "johnsmith@example.com",
+  "contents": [
+    {
+      "productID": 34,
+      "productName": "SuperWidget",
+      "quantity": 1
+    },
+    {
+      "productID": 56,
+      "productName": "WonderWidget",
+      "quantity": 3
+    }
+  ],
+  "orderCompleted": true
+}

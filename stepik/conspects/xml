@@ -1,0 +1,16 @@
+ XML:
+
+- from xml.etree import ElementTree - модуль для работы с графами xml
+- tree = ElementTree.parse("a.xml") - достаем содержимое
+- root - tree.getroot() - достаем корень дерева
+- for child in root:... - перебор детей корня
+- child.tag - значение тега
+- child.attrib - значение атрибута (dict)
+- child.text - содержимое тега
+- for elem in root.iter('asd') - перебор всех элементов внутри корня с данным тегом
+- tree.write('a.xml') - записывает содержимое в файл
+- root[0].set('type', 'new_attr') - запись нового атрибута
+- root.append(ElementTree.Element("new_tag")) - добавление внутрь root нового тега
+- root.text = "asdasdasd" - изменение текста внутри тега
+- root.remove(root.find('new_tag')) - поиск (первого) и удаление подтега по имени
+- ElementTree.SubElement(root, "new_tag") - создание подтега внутри root

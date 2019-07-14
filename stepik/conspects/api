@@ -1,0 +1,17 @@
+ API:
+
+- ПРИМЕР:
+
+import requests
+api_url = "api.openweathermap.org/data/2.5/weather" - запрос к API
+city = input("Enter city: ")
+
+params = {                                          - параметры запроса
+    'q': city,
+    'units': 'metric',
+    'appid': '11c0d3dc6093f7442898ee49d2430d20'
+}
+res = requests.get(api_url, params=params)
+data = res.json()                                   - перевод python dict
+template = "Current temperature in {} is {}"
+print(template.format(city, data["main"]["temp"]))
