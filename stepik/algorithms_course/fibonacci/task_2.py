@@ -1,4 +1,3 @@
-
 def fib_digit(n):
     if n <= 2:
         return 1
@@ -14,4 +13,5 @@ def fib_digit(n):
 
 
 print(fib_digit(317457))
+
 

@@ -1,42 +1,53 @@
-import math
-n=1000
-fd = []
-fd.append(['√log4n', math.sqrt(math.log(n, 4))])
-print(1)
-fd.append(['(log2n)^log2n', math.log(n, 2)**math.log(n, 2)])
-print(2)
-fd.append(['(log2n)^2', math.log(n, 2)**2])
-print(3)
-fd.append(['n^log2n', n**math.log(n, 2)])
-print(4)
-fd.append(['n^2', n**2])
-print(5)
-fd.append(['√n', math.sqrt(n)])
-print(6)
-fd.append(['3^log2n', 3**math.log(n, 2)])
-print(7)
-fd.append(['log2(log2n)', math.log(math.log(n, 2))])
-print(8)
-fd.append(['log3n', math.log(n, 3)])
-print(9)
-fd.append(['n^√n', n**math.sqrt(n)])
-print(10)
-fd.append(['n/log5n', n/math.log(n, 5)])
-print(11)
-fd.append(['7^(log2n)', 7**math.log(n, 2)])
-print(12)
-fd.append(['2^n', 2**n])
-print(13)
-fd.append(['2^(3n)', 2**(3*n)])
-print(14)
-#fd['2^(2^n)'] = 2**(2**n)
-print(15)
-fd.append(['4^n', 4**n])
-print(16)
-fd.append(['log2(n!)', math.log(math.factorial(n), 2)])
-print(17)
-fd.append(['n!', math.factorial(n)])
-fd.sort(key=lambda x: x[1])
-print(fd)
-for i in fd:
-    print(i[0])
+import heapq  # модуль для работы с мин. кучей из стандартной библиотеки Python
+from collections import Counter  # словарь в котором для каждого объекта поддерживается счетчик
+from collections import namedtuple
+
+
+# добавим классы для хранения информации о структуре дерева
+# воспользуемся функцией namedtuple из стандартной библиотеки
+class Node(namedtuple("Node", ["left", "right"])):  # класс для ветвей дерева - внутренних узлов; у них есть потомки
+    def walk(self, code, acc):
+        # чтобы обойти дерево нам нужно:
+        self.left.walk(code, acc + "0")  # пойти в левого потомка, добавив к префиксу "0"
+        self.right.walk(code, acc + "1")  # затем пойти в правого потомка, добавив к префиксу "1"
+
+
+class Leaf(namedtuple("Leaf", ["char"])):  # класс для листьев дерева, у него нет потомков, но есть значение символа
+    def walk(self, code, acc):
+        # потомков у листа нет, по этому для значения мы запишем построенный код для данного символа
+        code[self.char] = acc or "0"  # если строка длиной 1 то acc = "", для этого случая установим значение acc = "0"
+
+
+def huffman_encode(s):  # функция кодирования строки в коды Хаффмана
+    h = []  # инициализируем очередь с приоритетами
+    for ch, freq in Counter(s).items():  # постоим очередь с помощью цикла, добавив счетчик, уникальный для всех листьев
+        h.append((freq, len(h), Leaf(ch)))  # очередь будет представлена частотой символа, счетчиком и самим символом
+    heapq.heapify(h)  # построим очередь с приоритетами
+    count = len(h)  # инициализируем значение счетчика длиной очереди
+    while len(h) > 1:  # пока в очереди есть хотя бы 2 элемента
+        freq1, _count1, left = heapq.heappop(h)  # вытащим элемент с минимальной частотой - левый узел
+        freq2, _count2, right = heapq.heappop(h)  # вытащим следующий элемент с минимальной частотой - правый узел
+        # поместим в очередь новый элемент, у которого частота равна суме частот вытащенных элементов
+        heapq.heappush(h, (freq1 + freq2, count, Node(left, right)))  # добавим новый внутренний узел у которого
+        # потомки left и right соответственно
+        count += 1  # инкрементируем значение счетчика при добавлении нового элемента дерева
+    code = {}  # инициализируем словарь кодов символов
+    if h:  # если строка пустая, то очередь будет пустая и обходить нечего
+        [(_freq, _count, root)] = h  # в очереди 1 элемент, приоритет которого не важен, а сам элемент - корень дерева
+        root.walk(code, "")  # обойдем дерева от корня и заполним словарь для получения кодирования Хаффмана
+    return code  # возвращаем словарь символов и соответствующих им кодов
+
+
+def main():
+    s = input()  # читаем строку длиной  до 10**4
+    code = huffman_encode(s)  # кодируем строку
+    encoded = "".join(code[ch] for ch in s)  # отобразим закодированную версию, отобразив каждый символ
+    # в соответствующий код и конкатенируем результат
+    print(len(code), len(encoded))  # выведем число символов и длину закодированной строки
+    for ch in sorted(code):  # обойдем символы в словаре в алфавитном порядке с помощью функции sorted()
+        print("{}: {}".format(ch, code[ch]))  # выведем символ и соответствующий ему код
+    print(encoded)  # выведем закодированную строку
+
+
+if __name__ == "__main__":
+    main()
