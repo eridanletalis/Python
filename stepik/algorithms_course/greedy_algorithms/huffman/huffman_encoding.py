@@ -10,7 +10,7 @@ class Node(namedtuple("Node", ['left', 'rigth'])):
 
 class Leaf(namedtuple("Leaf", ["name"])):
     def walk(self, code, acc):
-        code[self.name] = acc
+        code[self.name] = acc or "0"
 
 
 def huffman_encode(s):
