@@ -1,0 +1,60 @@
+ Наибольшая возрастающая подпоследовательность:
+
+ВХОД: последовательность A[1...n]
+ВЫХОД: НВП A(i1)...A(ik), такие что i1 < ... < ik, A(i1) < ... < A(ik) и k - max
+ИДЕЯ:
+
+- при рассмотрении 2-ух соседних элементов НВП:
+    * z < x
+    * префикс НВП, заканчивающийся на z(все элементы НВП до z), должен быть оптимальным
+
+- пусть D[i] - длина НВП, заканчивающейся в A[i], тогда верно:
+    * D[i] = 1 + max( D[j]: j < i и A[j] < A[i] )
+- продолжаем для следующих участков рекурсивно
+
+РЕАЛИЗАЦИЯ
+    *Нахождение длины:
+
+    def get_len_lbu(a):
+        d = [i for i in range(len(a))]
+        for i in range(n):
+            d[i] = 1
+            for j in range(i - 1):
+                if a[j] < a[i] and d[j] + 1 > d[i]:
+                    d[i] = d[j] + 1
+        res = 0
+        for i in d:
+            res = max(res, i)
+        return res
+
+    *Нахождение массива индексов НВП:
+
+    def get_len_lbu(a):
+        d = [i for i in range(len(a))]
+        prev = [i for i in range(len(a))]
+        for i in range(len(a)):
+            d[i] = 1
+            prev[i] = -1
+            for j in range(i - 1):
+                if a[j] < a[i] and d[j] + 1 > d[i]:
+                    d[i] = d[j] + 1
+                    prev[i] = j
+        max_len = 0
+        max_len_id = 0
+        for i in range(len(d)):
+            if max(max_len, d[i]) != max_len:
+                max_len_id = i
+                max_len = d[i]
+
+        lbu_indexes = [i for i in range(max_len)]
+        j = max_len
+        while max_len_id > 0:
+            lbu_indexes[j] = max_len_id
+            j -= 1
+            max_len_id = prev[max_len_id]
+
+        return lbu_indexes
+
+
+СЛОЖНОСТЬ:
+- O(n^2)

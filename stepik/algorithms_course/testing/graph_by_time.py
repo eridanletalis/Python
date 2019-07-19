@@ -2,7 +2,7 @@ import time
 from matplotlib import pyplot as plt
 
 
-def timed(f, *args, n_iter=100):
+def timed(f, *args, n_iter=70):
     acc = float("inf")
     for i in range(n_iter):
         t0 = time.perf_counter()
