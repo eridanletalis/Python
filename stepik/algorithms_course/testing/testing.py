@@ -1,5 +1,5 @@
 from random import randint
-from stepik.algorithms_course.testing.graph_by_time import compare
+from stepik.algorithms_course.testing.speed_tester import compare
 from stepik.algorithms_course.divide_and_rule.quick_sort.quick_sort import quick_sort
 from stepik.algorithms_course.divide_and_rule.heap_sort.heap_sort import heap_sort
 
